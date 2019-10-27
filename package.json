@@ -1,6 +1,6 @@
 {
 	"name": "api-server-sim",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Api Server Simulator so you can mock api Rest services easily.",
 	"main": "index.js",
 	"scripts": {
@@ -12,5 +12,10 @@
 		"url": "https://github.com/oscarcenteno/api-server-sim.git"
 	},
 	"author": "Oscar Centeno",
-	"license": "UNLICENSED"
+	"license": "UNLICENSED",
+	"dependencies": {
+		"convert-excel-to-json": "^1.6.1",
+		"express": "^4.17.1",
+		"underscore": "^1.9.1"
+	}
 }

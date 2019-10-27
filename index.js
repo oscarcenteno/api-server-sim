@@ -7,7 +7,9 @@ class ExcelServer {
 	}
 
 	run() {
-		console.log('Starting server');
+    console.log('Starting server');
+
+    require('./app.js');
 	}
 }
 
