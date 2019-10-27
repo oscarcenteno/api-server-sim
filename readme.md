@@ -1,6 +1,6 @@
 # API Server Simulator
 
-Easily simulate requests and responses for a REST Api server.
+Easily simulate requests and responses for a REST Api server as specified in an Excel file.
 
 ## Getting Started
 
@@ -8,15 +8,18 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Installing
 
-```
+```sh
 npm install
 ```
 
-Pending: an example of getting some data out of the system or using it for a little demo
+## Running the server
 
-## Running the tests
+```js
+const ExcelServer = require("api-server-sim");
+const sim = new ExcelServer({file: 'file.xslx', port: 7001});
 
-Pending
+sim.run();
+```
 
 ## Versioning
 

@@ -1,8 +1,8 @@
 console.log('api server simulator 0.0.1');
 
-class Server {
-	constructor({ excelFile, port }) {
-		console.log('excelFile: ' + excelFile);
+class ExcelServer {
+	constructor({ file, port }) {
+    console.log('file: ' + file);
 		console.log('port: ' + port);
 	}
 
@@ -11,4 +11,4 @@ class Server {
 	}
 }
 
-module.exports = Server;
+module.exports = { ExcelServer };
