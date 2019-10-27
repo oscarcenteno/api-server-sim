@@ -70,8 +70,6 @@ function createEndpoint(element) {
 				} else {
 					res.status(404).send({ message: 'Body was not matched.' });
 				}
-
-				res.json({});
 			});
 			break;
 
@@ -87,8 +85,6 @@ function createEndpoint(element) {
 				} else {
 					res.status(404).send({ message: 'Body was not matched.' });
 				}
-
-				res.json({});
 			});
 			break;
 		default:

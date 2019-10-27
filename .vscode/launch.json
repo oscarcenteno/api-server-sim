@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Sample API Server",
-      "program": "${workspaceFolder}\\test_server\\app.js"
+      "program": "${workspaceFolder}\\test_server\\server.js"
     }
   ]
 }

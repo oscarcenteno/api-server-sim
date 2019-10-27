@@ -2,28 +2,41 @@
 
 Easily simulate requests and responses for a REST Api server as specified in an Excel file.
 
-## Getting Started
+## How to use the library
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Next code will use the library and start a server as specified in an Excel file located in your NodeJS project.
 
-### Installing
+```js
+const ExcelServer = require("api-server-sim");
+const sim = new ExcelServer({file: './endpoints.xslx', port: 3000});
+sim.run();
+```
+
+Find a sample Excel in the test_server folder.
+
+## Running and testing a sample server
+
+Install the required libraries.
 
 ```sh
 npm install
 ```
 
-## Running the server
+### Running the sample server
 
-```js
-const ExcelServer = require("api-server-sim");
-const sim = new ExcelServer({file: 'file.xslx', port: 7001});
+Use the test_server/endpoints.xlsx as a reference to simulate GET, POST or PUT requests, and specify specific Urls and Query params. Responses can be specified with status and body.
 
-sim.run();
+```sh
+npm run start
 ```
 
-## Versioning
+### Running tests for sample server
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+After running the sample server provided in this library, run the sample Jasmine tests.
+
+```sh
+npm test
+```
 
 ## Authors
 
@@ -31,4 +44,8 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [license.txt](license.txt) file for details.
+
+## Contributing
+
+Feel free to report suggestions and issues! Thanks.
