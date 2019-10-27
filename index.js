@@ -1,16 +1,5 @@
 console.log('api server simulator 0.0.1');
 
-class ExcelServer {
-	constructor({ file, port }) {
-    console.log('file: ' + file);
-		console.log('port: ' + port);
-	}
-
-	run() {
-    console.log('Starting server');
-
-    require('./app.js');
-	}
-}
+const ExcelServer = require('./ExcelServer.js')
 
 module.exports = { ExcelServer };
