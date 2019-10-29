@@ -32,7 +32,8 @@ function initializeApp() {
 	// 	disable cache and 304 Not Modified Response Codes
 	app.disable('etag');
 	// to be able to parse the body of a request
-	app.use(express.json());
+	// and support application/json or application/x-amz-json-1.1
+	app.use(express.json({ type: '*/*' }));
 	return app;
 }
 
