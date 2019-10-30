@@ -1,20 +1,33 @@
-function getPath(relativeFile) {
-	const path = require('path');
-	const appDir = path.dirname(require.main.filename);
-	const file = path.join(appDir, relativeFile);
+function parseJsonFile(relativeFile) {
+	try {
+		const path = require('path');
+		const appDir = path.dirname(require.main.filename);
+		const file = path.join(appDir, relativeFile);
 
-	return require(file);
+		return require(file);
+	} catch (error) {
+		throw new Error('Please check if this is a valid path or json object: ' + relativeFile);
+	}
 }
 
 class Endpoints {
 	constructor(rows) {
 		this.endPoints = rows.map((element) => {
+			let headers;
+			if (element.headers) {
+				try {
+					headers = JSON.parse(element.headers);
+				} catch (error) {
+					headers = parseJsonFile(element.headers);
+				}
+			}
+
 			let query;
 			if (element.query) {
 				try {
 					query = JSON.parse(element.query);
 				} catch (error) {
-					query = getPath(element.query);
+					query = parseJsonFile(element.query);
 				}
 			}
 
@@ -23,7 +36,7 @@ class Endpoints {
 				try {
 					body = JSON.parse(element.body);
 				} catch (error) {
-					body = getPath(element.body);
+					body = parseJsonFile(element.body);
 				}
 			}
 
@@ -32,16 +45,17 @@ class Endpoints {
 				try {
 					response = JSON.parse(element.response);
 				} catch (error) {
-					response = getPath(element.response);
+					response = parseJsonFile(element.response);
 				}
 			}
 
-			const allowedMethods = [ 'get', 'post', 'put' ];
+			const allowedMethods = ['get', 'post', 'put'];
 			const currentMethod = element.method.toLowerCase();
 			if (allowedMethods.includes(currentMethod)) {
 				return {
 					method: currentMethod,
 					url: element.url,
+					jsonHeaders: headers,
 					jsonBody: body,
 					jsonQuery: query,
 					jsonResponse: response,

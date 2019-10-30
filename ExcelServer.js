@@ -50,12 +50,12 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((element) => _.isEqual(element.query, req.query));
+				const found = mappings.find((mapping) => _.isEqual(mapping.query, req.query) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
 				} else {
-					res.status(404).send({ message: 'Query params were not matched.' });
+					res.status(404).send({ message: 'Query params were not matched or required Headers were not contained in the Request.' });
 				}
 			});
 			break;
@@ -64,7 +64,7 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((element) => _.isEqual(element.body, req.body));
+				const found = mappings.find((mapping) => _.isEqual(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
@@ -79,7 +79,7 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((element) => _.isEqual(element.body, req.body));
+				const found = mappings.find((mapping) => _.isEqual(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
@@ -91,4 +91,33 @@ function createEndpoint(element) {
 		default:
 			break;
 	}
+}
+
+function requiredHeadersAreContained(requiredHeaders, requestHeaders) {
+	if (requiredHeaders) {
+
+		const lowerRequiredHeaders = lowercaseAllPropertyNames(requiredHeaders);
+		const lowerRequestHeaders = lowercaseAllPropertyNames(requestHeaders);
+
+		const requiredKeys = Object.keys(lowerRequiredHeaders);
+
+		let areContained = true;
+		requiredKeys.forEach(key => { areContained = areContained && (lowerRequiredHeaders[key] == lowerRequestHeaders[key]) });
+
+		return areContained;
+	}
+	else {
+		return true;
+	}
+}
+
+function lowercaseAllPropertyNames(obj) {
+	var key, keys = Object.keys(obj);
+	var n = keys.length;
+	var lowerRequiredHeaders = {};
+	while (n--) {
+		key = keys[n];
+		lowerRequiredHeaders[key.toLowerCase()] = obj[key];
+	}
+	return lowerRequiredHeaders;
 }

@@ -9,6 +9,7 @@ function getSmartEndPoints(file) {
     );
     if (found) {
       found.mappings.push({
+        headers: endpoint.jsonHeaders,
         body: endpoint.jsonBody,
         query: endpoint.jsonQuery,
         status: endpoint.status,
@@ -20,6 +21,7 @@ function getSmartEndPoints(file) {
         url: endpoint.url,
         mappings: [
           {
+            headers: endpoint.jsonHeaders,
             body: endpoint.jsonBody,
             query: endpoint.jsonQuery,
             status: endpoint.status,
