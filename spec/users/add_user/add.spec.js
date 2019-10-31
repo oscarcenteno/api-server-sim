@@ -5,7 +5,7 @@ const user = {
 };
 
 describe('Users', () => {
-	it('can add a valid user', async () => {
+	it('can match POST method and body', async () => {
 		const data = await api.addUser(user);
 
 		expect(data).toEqual({ id: 1 });

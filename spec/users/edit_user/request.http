@@ -1,8 +1,8 @@
-PUT http://localhost:3000/users/1
+PUT http://localhost:3001/users/1
 Content-Type: application/json; charset=utf-8
 
 {
   "id": 1,
-  "name": "Pol",
+  "name": "John",
   "lastName": "New Last Name"
 }

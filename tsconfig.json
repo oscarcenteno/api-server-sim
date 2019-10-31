@@ -1,0 +1,23 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "allowJs": true,
+        "target": "es6",
+        "checkJs": true,
+        "noEmit": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "types": [
+            "jasmine",
+            "node"
+        ]
+    },
+    "include": [
+        "**/*.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.json"
+    ]
+}

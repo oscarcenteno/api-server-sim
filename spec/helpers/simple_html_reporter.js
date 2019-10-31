@@ -1,5 +1,5 @@
-var HtmlReporter = require('jasmine-pretty-html-reporter').Reporter;
-var path = require('path');
+const HtmlReporter = require('jasmine-pretty-html-reporter').Reporter;
+const path = require('path');
 
 // options object
 jasmine.getEnv().addReporter(new HtmlReporter({

@@ -36,16 +36,16 @@ function getSmartEndPoints(file) {
 }
 
 function retrieveRowsFromFile(relativeFile) {
-  var path = require('path');
-  var appDir = path.dirname(require.main.filename);
+  const path = require('path');
+  const appDir = path.dirname(require.main.filename);
   const file = path.join(appDir, relativeFile);
-  const rows = getRowsFromSheet({ file, sheet: 'Sheet1' });
+  const rows = getRowsFromSheet(file);
   return rows;
 }
 
-function getRowsFromSheet({ file, sheet }) {
+function getRowsFromSheet(file) {
   const excelToJson = require('convert-excel-to-json');
-  const result = excelToJson({
+  const jsonFile = excelToJson({
     sourceFile: file,
     header: {
       rows: 1
@@ -55,7 +55,17 @@ function getRowsFromSheet({ file, sheet }) {
     }
   });
 
-  return result[sheet];
+  // join all tabs in a single list
+  let rows = [];
+  let key, keys = Object.keys(jsonFile);
+  let n = keys.length;
+  while (n--) {
+    key = keys[n];
+    const newElements = jsonFile[key];
+    rows = rows.concat(newElements);
+  }
+
+  return rows;
 }
 
 module.exports = getSmartEndPoints;

@@ -1,0 +1,40 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jasmine": true,
+        "protractor": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "line-break-style": 0,
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+            "warn",
+            {
+                "allow": [
+                    "error"
+                ]
+            }
+        ],
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "no-unused-vars": [
+            "warn"
+        ]
+    }
+}

@@ -1,8 +1,9 @@
 const { default: axios } = require('axios');
 
 class Api {
-	async editUser(user) {
-		const response = await axios.put('http://localhost:3001/users/' + user.id, user);
+	async getGetHello() {
+		const url = 'http://localhost:3001/hello';
+		const response = await axios.get(url);
 
 		return response.data;
 	}

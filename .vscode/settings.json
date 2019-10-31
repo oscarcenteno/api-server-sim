@@ -1,9 +1,21 @@
 {
-    "workbench.colorCustomizations": {
-        "statusBar.background": "#b52e31",
-        "statusBarItem.hoverBackground": "#d04649",
-        "statusBar.foreground": "#e7e7e7",
-        "tab.activeBorder": "#d04649"
+    "editor.mouseWheelZoom": true,
+    "jasmineExplorer.config": "spec/support/jasmine.json",
+    "editor.formatOnSave": true,
+    "javascript.implicitProjectConfig.checkJs": true,
+    "exclude": "{**/node_modules/**,**/bower_components/**,**/dist/**,**/build/**,**/.vscode/**,**/_output/**,**/*.min.*,**/*.map}",
+    "files.autoSave": "afterDelay",
+    "eslint.autoFixOnSave": true,
+    "eslint.lintTask.options": "-c ./framework/.eslintrc.json --ignore-path ./framework/.eslintignore",
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "rest-client.environmentVariables": {
+        "$shared": {},
+        "local": {
+            "host": "localhost:3001"
+        }
     },
-    "peacock.color": "#b52e31"
+    "editor.wordWrap": "on",
+    "cSpell.words": [
+        "ISTQB"
+    ]
 }

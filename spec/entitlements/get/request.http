@@ -1,0 +1,2 @@
+GET http://localhost:3001/entitlements?role=krm%20operator
+Content-Type: application/json

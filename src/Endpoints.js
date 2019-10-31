@@ -13,6 +13,12 @@ function parseJsonFile(relativeFile) {
 class Endpoints {
 	constructor(rows) {
 		this.endPoints = rows.map((element) => {
+
+			// check required
+			if (!element.method || !element.url || !element.status || !element.response) {
+				throw new Error('method, url, status and response columns are required for every row. Please check scenario "' + element.scenario + '"');
+			}
+
 			let headers;
 			if (element.headers) {
 				try {

@@ -12,7 +12,7 @@ const expected = {
 };
 
 describe('Users', () => {
-	it('can edit a user', async () => {
+	it('can match PUT method', async () => {
 		const data = await api.editUser(user);
 
 		expect(data).toEqual(expected);

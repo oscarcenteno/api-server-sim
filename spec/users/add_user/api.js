@@ -1,4 +1,4 @@
-var axios = require('axios');
+const { default: axios } = require('axios');
 
 class Api {
 	async addUser(data) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // app to be initialized
 let app;
 
@@ -122,9 +123,9 @@ function requiredHeadersAreContained(requiredHeaders, requestHeaders) {
 }
 
 function lowercaseAllPropertyNames(obj) {
-	var key, keys = Object.keys(obj);
-	var n = keys.length;
-	var lowerRequiredHeaders = {};
+	let key, keys = Object.keys(obj);
+	let n = keys.length;
+	const lowerRequiredHeaders = {};
 	while (n--) {
 		key = keys[n];
 		lowerRequiredHeaders[key.toLowerCase()] = obj[key];
