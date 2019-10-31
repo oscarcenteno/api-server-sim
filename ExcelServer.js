@@ -42,7 +42,7 @@ function initializeEndpointsInApp(smartGetEndPoints) {
 }
 
 function createEndpoint(element) {
-	const _ = require('underscore');
+
 
 	switch (element.method) {
 		case 'get':
@@ -50,7 +50,7 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((mapping) => _.isEqual(mapping.query, req.query) && requiredHeadersAreContained(mapping.headers, req.headers));
+				const found = mappings.find((mapping) => matches(mapping.query, req.query) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
@@ -64,7 +64,7 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((mapping) => _.isEqual(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
+				const found = mappings.find((mapping) => matches(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
@@ -79,7 +79,7 @@ function createEndpoint(element) {
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
-				const found = mappings.find((mapping) => _.isEqual(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
+				const found = mappings.find((mapping) => matches(mapping.body, req.body) && requiredHeadersAreContained(mapping.headers, req.headers));
 
 				if (found) {
 					res.status(found.status).json(found.response);
@@ -90,6 +90,16 @@ function createEndpoint(element) {
 			break;
 		default:
 			break;
+	}
+}
+
+function matches(requiredProperties, requestProperties) {
+	if (requiredProperties) {
+		const _ = require('underscore');
+		return _.isEqual(requiredProperties, requestProperties);
+	}
+	else {
+		return true;
 	}
 }
 
