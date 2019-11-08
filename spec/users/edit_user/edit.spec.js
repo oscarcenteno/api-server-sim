@@ -11,7 +11,7 @@ const expected = {
 	lastName: 'New Last Name'
 };
 
-describe('Users', () => {
+describe('Method', () => {
 	it('can match PUT method', async () => {
 		const data = await api.editUser(user);
 

@@ -6,7 +6,7 @@
     "exclude": "{**/node_modules/**,**/bower_components/**,**/dist/**,**/build/**,**/.vscode/**,**/_output/**,**/*.min.*,**/*.map}",
     "files.autoSave": "afterDelay",
     "eslint.autoFixOnSave": true,
-    "eslint.lintTask.options": "-c ./framework/.eslintrc.json --ignore-path ./framework/.eslintignore",
+    "eslint.lintTask.options": "-c ./.eslintrc.json --ignore-path ./.eslintignore",
     "java.configuration.updateBuildConfiguration": "automatic",
     "rest-client.environmentVariables": {
         "$shared": {},
@@ -14,8 +14,5 @@
             "host": "localhost:3001"
         }
     },
-    "editor.wordWrap": "on",
-    "cSpell.words": [
-        "ISTQB"
-    ]
+    "editor.wordWrap": "on"
 }

@@ -1,1 +1,1 @@
-GET http://localhost:3001/wallets
+GET http://{{host}}/wallets

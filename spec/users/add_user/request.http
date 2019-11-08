@@ -1,4 +1,4 @@
-POST http://localhost:3001/users
+POST http://{{host}}/users
 Content-Type: application/json; charset=utf-8
 
 {

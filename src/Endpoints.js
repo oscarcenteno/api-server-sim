@@ -68,6 +68,7 @@ class Endpoints {
 					status: element.status
 				};
 			} else {
+				// eslint-disable-next-line no-console
 				console.log(`Method ${currentMethod} is not allowed for ${element.url}`);
 			}
 		});

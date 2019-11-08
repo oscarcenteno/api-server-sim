@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Entitlements', () => {
+describe('Query', () => {
 	it('query can be a json file', async () => {
 		const users = await api.getEntitlements();
 		const expected = getExpected();

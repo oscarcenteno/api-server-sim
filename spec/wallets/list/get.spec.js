@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Wallets', () => {
+describe('Excel', () => {
 	it('can have any number of scenarios', async () => {
 		const users = await api.getWallets();
 		const expected = getExpected();

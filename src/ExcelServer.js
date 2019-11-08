@@ -113,7 +113,9 @@ function requiredHeadersAreContained(requiredHeaders, requestHeaders) {
 		const requiredKeys = Object.keys(lowerRequiredHeaders);
 
 		let areContained = true;
-		requiredKeys.forEach(key => { areContained = areContained && (lowerRequiredHeaders[key] == lowerRequestHeaders[key]) });
+		requiredKeys.forEach(key => {
+			areContained = areContained && (lowerRequiredHeaders[key] == lowerRequestHeaders[key]);
+		});
 
 		return areContained;
 	}

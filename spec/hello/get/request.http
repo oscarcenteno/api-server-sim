@@ -1,2 +1,2 @@
-GET http://localhost:3001/hello
+GET http://{{host}}/hello
 Content-Type: application/json

@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Wallets', () => {
+describe('Excel', () => {
 	it('can parse all the tabs in the Excel', async () => {
 		const users = await api.getSingleWallet('sample');
 		const expected = getExpected();

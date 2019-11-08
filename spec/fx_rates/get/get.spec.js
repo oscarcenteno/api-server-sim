@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('FX Rates', () => {
+describe('Headers', () => {
 	it('can match headers', async () => {
 		const rates = await api.getFxRatesGbp();
 		const expected = { 'rate': 2.00 };

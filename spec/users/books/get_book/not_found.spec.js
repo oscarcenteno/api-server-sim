@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Users / Books', () => {
+describe('Status', () => {
 	it('can return error codes', async () => {
 		try {
 			await api.getBookForUser({ userId: 1, bookId: 2 });

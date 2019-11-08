@@ -4,7 +4,7 @@ const user = {
 	lastName: 'Smith'
 };
 
-describe('Users', () => {
+describe('Method', () => {
 	it('can match POST method and body', async () => {
 		const data = await api.addUser(user);
 

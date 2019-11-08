@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Users', () => {
+describe('Query', () => {
 	it('can match query', async () => {
 		try {
 			await api.getUnauthorizedUserLogin();

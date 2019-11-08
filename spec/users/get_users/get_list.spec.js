@@ -1,6 +1,6 @@
 const api = require('./api');
 
-describe('Users', () => {
+describe('Response', () => {
 	it('response can be a json file', async () => {
 		const users = await api.getUsers();
 		const expected = getExpected();
