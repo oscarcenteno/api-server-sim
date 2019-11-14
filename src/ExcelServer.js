@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 // app to be initialized
 let app;
+let callsContainer = {
+	port: 0,
+	calls: []
+};
 
 class ExcelServer {
 	constructor({ file, port }) {
@@ -18,6 +22,14 @@ class ExcelServer {
 		const getSmartEndPoints = require('./smart_endpoints');
 		const smartGetEndPoints = getSmartEndPoints(this.file);
 		initializeEndpointsInApp(smartGetEndPoints);
+
+		// calls
+		callsContainer.port = this.port;
+		app.get('/calls', (req, res) => {
+			res.setHeader('Content-Type', 'application/json');
+
+			res.status(200).json(callsContainer);
+		});
 
 		app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
 	}
@@ -48,6 +60,7 @@ function createEndpoint(element) {
 	switch (element.method) {
 		case 'get':
 			app.get(element.url, (req, res) => {
+				reportCall({ method: 'GET', element, req });
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
@@ -62,6 +75,7 @@ function createEndpoint(element) {
 			break;
 		case 'post':
 			app.post(element.url, (req, res) => {
+				reportCall({ method: 'POST', element, req });
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
@@ -77,6 +91,7 @@ function createEndpoint(element) {
 
 		case 'put':
 			app.put(element.url, (req, res) => {
+				reportCall({ method: 'PUT', element, req });
 				res.setHeader('Content-Type', 'application/json');
 
 				const mappings = element.mappings;
@@ -92,6 +107,17 @@ function createEndpoint(element) {
 		default:
 			break;
 	}
+}
+
+function reportCall({ method, element, req }) {
+	const thisCall = {
+		'method': method,
+		'url': element.url,
+		'headers': req.headers,
+		'body': req.body,
+		'query': req.query
+	};
+	callsContainer.calls.push(thisCall);
 }
 
 function matches(requiredProperties, requestProperties) {

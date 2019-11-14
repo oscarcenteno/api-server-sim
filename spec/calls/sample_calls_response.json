@@ -1,0 +1,224 @@
+{
+    "port": 3001,
+    "calls": [
+        {
+            "method": "GET",
+            "url": "/hello",
+            "headers": {
+                "host": "localhost:3001",
+                "connection": "keep-alive",
+                "dnt": "1",
+                "upgrade-insecure-requests": "1",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
+                "sec-fetch-user": "?1",
+                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
+                "sec-fetch-site": "none",
+                "sec-fetch-mode": "navigate",
+                "accept-encoding": "gzip, deflate, br",
+                "accept-language": "en-US,en;q=0.9,es-CR;q=0.8,es;q=0.7,ar;q=0.6",
+                "cookie": "iconSize=16x16; jenkins-timestamper-offset=-7200000; Idea-79606f2a=bf28f5ca-b97b-4109-ba67-43fb09a27c47; _ga=GA1.1.865475418.1573581008; hubspotutk=eae5ccc258b72b1ebd64e1f59d62546c; __hstc=181257784.eae5ccc258b72b1ebd64e1f59d62546c.1573581008065.1573581008065.1573636120933.2"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/hello",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/hello",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/entitlements",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {
+                "role": "krm operator"
+            }
+        },
+        {
+            "method": "GET",
+            "url": "/fx_rates/eur/gbp",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "authorization": "Token TheToken",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/fx_rates/eur/usd",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "content-type": "application/json",
+                "authorization": "Token _JzeGOOrwXmCX7EPIMeqo6dO35bcbqEU5u4Xpi2TEC0zYsS6Oze7u8Ue-emaSmRB8OfJ87qL-t7C0wLIz-wiyLe8mWmisFwwEmmslNXqixsQESxtyZi1GBDhAOTy83NoXl8edmxqXoRtx_fzKtatZcckSqmcznosZuZ-FXzyOhrLg2hKgfqSacS5qf2_uPnhXmRdafggzvGjpXAOxAtaFyvcY6cl6iclXsa5fBu6FdZK91l7nFKGMmAavhrkOt_Yxh3XGGimHtu0fMzk0Ccphlnep85DOT8yWstrhUEnBQ6E",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/hello",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "POST",
+            "url": "/users",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "content-type": "application/json;charset=utf-8",
+                "user-agent": "axios/0.19.0",
+                "content-length": "34",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {
+                "name": "John",
+                "lastName": "Smith"
+            },
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/users/1/books/1",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/users/1/books/2",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "PUT",
+            "url": "/users/1",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "content-type": "application/json;charset=utf-8",
+                "user-agent": "axios/0.19.0",
+                "content-length": "49",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {
+                "id": 1,
+                "name": "John",
+                "lastName": "New Last Name"
+            },
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/users/1",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/users",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/users/login",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {
+                "username": "user.maker",
+                "password": "1234"
+            }
+        },
+        {
+            "method": "GET",
+            "url": "/wallets",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        },
+        {
+            "method": "GET",
+            "url": "/wallets/sample",
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "user-agent": "axios/0.19.0",
+                "host": "localhost:3001",
+                "connection": "close"
+            },
+            "body": {},
+            "query": {}
+        }
+    ]
+}
