@@ -8,18 +8,16 @@ class Api {
 		return body.port;
 	}
 
-	async getCallsTo(url) {
+	async getCalls() {
 		const apiUrl = 'http://localhost:3001/calls';
 		const response = await axios.get(apiUrl);
-		const body = response.data;
-		return body.calls.filter(call => call.url === url);
+		return response.data.calls;
 	}
 
-	async getFirstCallTo(url) {
-		const apiUrl = 'http://localhost:3001/calls';
+	async getLastCallTo({ method, url }) {
+		const apiUrl = `http://localhost:3001/calls/last/?method=${method}&url=${url}`;
 		const response = await axios.get(apiUrl);
-		const body = response.data;
-		const call = body.calls.filter(call => call.url === url)[0];
+		const call = response.data;
 
 		return {
 			method: call.method,
@@ -28,6 +26,12 @@ class Api {
 			bodyIsReported: call.body != undefined,
 			queryIsReported: call.query != undefined
 		};
+	}
+
+	async flush() {
+		const apiUrl = 'http://localhost:3001/calls/flush';
+		const response = await axios.put(apiUrl);
+		return response.data;
 	}
 }
 

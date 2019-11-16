@@ -49,3 +49,9 @@ This project is licensed under the MIT License - see the [license.txt](license.t
 ## Contributing
 
 Feel free to report suggestions and issues! Thanks.
+
+## Ideas
+
+* Validate simulation scenarios against a swagger file
+* Flush automatically daily
+* show an html page for the configured endpoints

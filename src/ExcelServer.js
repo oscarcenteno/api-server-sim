@@ -31,6 +31,46 @@ class ExcelServer {
 			res.status(200).json(callsContainer);
 		});
 
+		app.put('/calls/flush', (req, res) => {
+			res.setHeader('Content-Type', 'application/json');
+
+			const flushed = callsContainer.calls.length;
+			callsContainer.calls = [];
+
+			res.status(200).json({ 'message': `Flushed ${flushed} calls!` });
+		});
+
+		app.get('/calls/last', (req, res) => {
+			res.setHeader('Content-Type', 'application/json');
+
+			const receivedMethod = req.query.method;
+			const receivedUrl = req.query.url;
+
+			if (receivedMethod != undefined && receivedUrl != undefined) {
+				const method = receivedMethod.toLowerCase();
+				const url = receivedUrl.toLowerCase();
+
+				const calls = callsContainer.calls.filter(call => call.method.toLowerCase() === method && call.url.toLowerCase() === url);
+				const lastCall = calls[calls.length - 1];
+
+				if (lastCall != undefined) {
+					res.status(200).json(lastCall);
+				}
+				else {
+					res.status(404).json({ message: 'No call was found.' });
+				}
+
+			}
+			else {
+				res.status(400).json({ message: `url and method query params are required. Received:  url: ${req.query.url} method: ${req.query.method}` });
+
+			}
+
+
+
+		});
+
+		process.title = `api-server-sim-${this.port}`;
 		app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
 	}
 }
@@ -115,7 +155,8 @@ function reportCall({ method, element, req }) {
 		'url': element.url,
 		'headers': req.headers,
 		'body': req.body,
-		'query': req.query
+		'query': req.query,
+		'timeStamp': Date.now()
 	};
 	callsContainer.calls.push(thisCall);
 }
