@@ -1,0 +1,15 @@
+### can validate a valid POST request body
+POST http://{{host}}/v1/wallets
+Content-Type: application/json
+
+{
+    "name": "sample"
+}
+
+### can validate an invalid POST request body
+POST http://{{host}}/v1/wallets
+Content-Type: application/json
+
+{
+    "name2": "sample"
+}

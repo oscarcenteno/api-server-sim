@@ -1,0 +1,6 @@
+
+### can validate swagger on endpoints under the server base url given un swagger file (test_server/v1/openapi.yaml)
+GET http://{{host}}/v1/wallets/1
+
+### can validate an invalid response
+GET http://{{host}}/v1/wallets/2

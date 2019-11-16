@@ -1,0 +1,4 @@
+### can validate non documented methods
+DELETE http://{{host}}/v1/wallets?id=1
+Content-Type: application/json
+

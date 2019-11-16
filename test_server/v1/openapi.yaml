@@ -1,0 +1,94 @@
+openapi: "3.0.2"
+info:
+  title: api-server-sim
+  version: 0.0.11
+  license:
+    name: UNLICENSED
+  description: |-
+    [Specification JSON](/api-spec)
+
+    Api Server Simulator so you can mock api Rest services easily.
+paths:
+  /wallets:
+    post:
+      summary: /wallets
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - name
+        required: true
+      responses:
+        "201":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                required:
+                  - id
+  /wallets/{walletId}:
+    get:
+      summary: /wallets/{walletId}
+      responses:
+        "200":
+          description: "Returns a sample wallet"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                required:
+                  - id
+                  - name
+    put:
+      summary: PUT /wallets/{walletId}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+              required:
+                - id
+                - name
+        required: true
+      responses:
+        "200":
+          description: "Edits fields in a wallet"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                required:
+                  - id
+                  - name
+
+servers:
+  - url: /v1
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
