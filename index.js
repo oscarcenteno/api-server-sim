@@ -1,2 +1,3 @@
 const ExcelServer = require('./src/ExcelServer.js');
-module.exports = { ExcelServer };
+const EndpointsParser = require('./src/Endpoints');
+module.exports = { ExcelServer, EndpointsParser };

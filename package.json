@@ -1,6 +1,6 @@
 {
 	"name": "api-server-sim",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"description": "Api Server Simulator so you can mock api Rest services easily.",
 	"main": "index.js",
 	"scripts": {

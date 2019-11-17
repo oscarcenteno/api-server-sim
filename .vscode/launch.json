@@ -8,12 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Sample API Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "start",
-        "debug"
-      ],
-      "port": 9229,
+      "program": "${workspaceFolder}/test_server/server.js",
       "skipFiles": [
         "<node_internals>/**"
       ]

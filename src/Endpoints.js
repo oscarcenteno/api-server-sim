@@ -19,7 +19,7 @@ class Endpoints {
 				throw new Error('method, url, status and response columns are required for every row. Please check scenario "' + element.scenario + '"');
 			}
 
-			
+
 			validatePaths(element);
 			validateUrl(element);
 
@@ -63,6 +63,8 @@ class Endpoints {
 			const currentMethod = element.method.toLowerCase();
 			if (allowedMethods.includes(currentMethod)) {
 				return {
+					suite: element.suite,
+					scenario: element.scenario,
 					method: currentMethod,
 					url: element.url,
 					jsonHeaders: headers,
@@ -75,6 +77,10 @@ class Endpoints {
 				throw new Error(`Method ${currentMethod} is not allowed for ${element.url}`);
 			}
 		});
+	}
+
+	getList() {
+		return this.endPoints;
 	}
 }
 
