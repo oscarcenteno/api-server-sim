@@ -2,8 +2,10 @@ const Parser = require('./EndPointsParser');
 
 function getSmartEndPoints(file) {
   const smartGetEndPoints = [];
+  const path = require('path');
+  const appDir = path.dirname(require.main.filename);
 
-  const endPoints = new Parser(file).getList();
+  const endPoints = new Parser({ appDir, file }).getList();
   endPoints.forEach((endpoint) => {
     const found = smartGetEndPoints.find(
       (element) => element.method == endpoint.method && element.url == endpoint.url

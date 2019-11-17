@@ -1,17 +1,16 @@
-function parseJsonFile(relativeFile) {
+function parseJsonFile({ appDir, file }) {
 	try {
 		const path = require('path');
-		const appDir = path.dirname(require.main.filename);
-		const file = path.join(appDir, relativeFile);
+		const absolutefile = path.join(appDir, file);
 
-		return require(file);
+		return require(absolutefile);
 	} catch (error) {
-		throw new Error('Please check if this is a valid path, the file exists, or is a valid json object: ' + relativeFile);
+		throw new Error('Please check if this is a valid path, the file exists, or is a valid json object: ' + file);
 	}
 }
 
 class Endpoints {
-	constructor(rows) {
+	constructor({ appDir, rows }) {
 		this.endPoints = rows.map((element) => {
 
 			// check required
@@ -28,7 +27,7 @@ class Endpoints {
 				try {
 					headers = JSON.parse(element.headers);
 				} catch (error) {
-					headers = parseJsonFile(element.headers);
+					headers = parseJsonFile({ appDir, file: element.headers });
 				}
 			}
 
@@ -37,7 +36,7 @@ class Endpoints {
 				try {
 					query = JSON.parse(element.query);
 				} catch (error) {
-					query = parseJsonFile(element.query);
+					query = parseJsonFile({ appDir, file: element.query });
 				}
 			}
 
@@ -46,7 +45,7 @@ class Endpoints {
 				try {
 					body = JSON.parse(element.body);
 				} catch (error) {
-					body = parseJsonFile(element.body);
+					body = parseJsonFile({ appDir, file: element.body });
 				}
 			}
 
@@ -55,7 +54,7 @@ class Endpoints {
 				try {
 					response = JSON.parse(element.response);
 				} catch (error) {
-					response = parseJsonFile(element.response);
+					response = parseJsonFile({ appDir, file: element.response });
 				}
 			}
 

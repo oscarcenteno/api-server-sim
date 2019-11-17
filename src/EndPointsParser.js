@@ -1,8 +1,12 @@
 class EndPointsParser {
-    constructor(file) {
-        const rows = retrieveRowsFromFile(file);
+    constructor({ appDir, file }) {
+        const path = require('path');
+        const absoluteFile = path.join(appDir, file);
+
+        const rows = retrieveRowsFromFile(absoluteFile);
+
         const EndPoints = require('./Endpoints');
-        this.endPoints = new EndPoints(rows).endPoints;
+        this.endPoints = new EndPoints({ appDir, rows }).endPoints;
     }
 
     getList() {
@@ -12,10 +16,8 @@ class EndPointsParser {
 
 module.exports = EndPointsParser;
 
-function retrieveRowsFromFile(relativeFile) {
-    const path = require('path');
-    const appDir = path.dirname(require.main.filename);
-    const file = path.join(appDir, relativeFile);
+function retrieveRowsFromFile(file) {
+
     const rows = getRowsFromSheet(file);
     return rows;
 }
