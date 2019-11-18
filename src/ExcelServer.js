@@ -23,31 +23,32 @@ class ExcelServer {
 
 		app = initializeApp();
 
-		installOpenApiValidator(this.apiSpec);
+		installOpenApiValidator(this.apiSpec).then(() => {
 
-		const getSmartEndPoints = require('./smart_endpoints');
-		const smartGetEndPoints = getSmartEndPoints(this.file);
-		initializeEndpointsInApp(smartGetEndPoints);
+			const getSmartEndPoints = require('./smart_endpoints');
+			const smartGetEndPoints = getSmartEndPoints(this.file);
+			initializeEndpointsInApp(smartGetEndPoints);
 
-		// calls
-		callsContainer.port = this.port;
-		configureCallsEndpoints();
+			// calls
+			callsContainer.port = this.port;
+			configureCallsEndpoints();
 
-		/** place handleRequests as the very last middleware */
-		//expressOasGenerator.handleRequests();
+			/** place handleRequests as the very last middleware */
+			//expressOasGenerator.handleRequests();
 
-		// For Open Api Validator errors
-		// 6. Create an Express error handler
-		app.use((err, req, res, next) => {
-			// 7. Customize errors
-			res.status(err.status || 500).json({
-				message: err.message,
-				errors: err.errors,
+			// For Open Api Validator errors
+			// 6. Create an Express error handler
+			app.use((err, req, res, next) => {
+				// 7. Customize errors
+				res.status(err.status || 500).json({
+					message: err.message,
+					errors: err.errors,
+				});
 			});
-		});
 
-		process.title = `api-server-sim-${this.port}`;
-		app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
+			process.title = `api-server-sim-${this.port}`;
+			app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
+		});
 	}
 
 
@@ -55,14 +56,25 @@ class ExcelServer {
 
 module.exports = ExcelServer;
 
-function installOpenApiValidator(apiSpec) {
+async function installOpenApiValidator(apiSpec) {
 	if (apiSpec) {
+		let parsed = '';
+		const refParser = require('json-schema-ref-parser');
+
+		const schema = await refParser.dereference(apiSpec);
+
+		// `schema` is just a normal JavaScript object that contains your entire JSON Schema,
+		// including referenced files, combined into a single object
+		console.log('Schema parsed and deferenced successfully.');
+		parsed = schema;
+
 		const OpenApiValidator = require('express-openapi-validator').OpenApiValidator;
 		new OpenApiValidator({
-			apiSpec: apiSpec,
+			apiSpec: parsed,
 			validateRequests: true,
 			validateResponses: true,
 		}).install(app);
+		console.log('Installed OpenApiValidator.');
 	}
 }
 
