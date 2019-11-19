@@ -1,4 +1,4 @@
-const Parser = require('./EndPointsParser');
+const MultipleEndPointsParser = require('./MultipleEndPointsParser');
 
 /**
  * @param {{ forEach: (arg0: (file: String) => void) => void; }} files
@@ -8,11 +8,7 @@ function getSmartEndPoints(files) {
   const path = require('path');
   const appDir = path.dirname(require.main.filename);
 
-  let endPoints = [];
-  files.forEach(file => {
-    const currentEndpoints = new Parser({ appDir, file }).getList();
-    endPoints = endPoints.concat(currentEndpoints);
-  });
+  const endPoints = new MultipleEndPointsParser({ appDir, files }).getList();
 
   endPoints.forEach((endpoint) => {
     const found = smartGetEndPoints.find(
