@@ -1,11 +1,19 @@
 const Parser = require('./EndPointsParser');
 
-function getSmartEndPoints(file) {
+/**
+ * @param {{ forEach: (arg0: (file: String) => void) => void; }} files
+ */
+function getSmartEndPoints(files) {
   const smartGetEndPoints = [];
   const path = require('path');
   const appDir = path.dirname(require.main.filename);
 
-  const endPoints = new Parser({ appDir, file }).getList();
+  let endPoints = [];
+  files.forEach(file => {
+    const currentEndpoints = new Parser({ appDir, file }).getList();
+    endPoints = endPoints.concat(currentEndpoints);
+  });
+
   endPoints.forEach((endpoint) => {
     const found = smartGetEndPoints.find(
       (element) => element.method == endpoint.method && element.url == endpoint.url

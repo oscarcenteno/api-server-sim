@@ -9,12 +9,12 @@ let callsContainer = {
 };
 
 class ExcelServer {
-	constructor({ file, port }, apiSpec) {
-		this.file = file;
+	constructor({ files, port }, apiSpec) {
+		this.files = files;
 		this.port = port;
 		this.apiSpec = apiSpec;
 
-		console.log('file: ' + file);
+		console.log('files: ' + files);
 		console.log('port: ' + port);
 	}
 
@@ -26,7 +26,7 @@ class ExcelServer {
 		installOpenApiValidator(this.apiSpec).then(() => {
 
 			const getSmartEndPoints = require('./smart_endpoints');
-			const smartGetEndPoints = getSmartEndPoints(this.file);
+			const smartGetEndPoints = getSmartEndPoints(this.files);
 			initializeEndpointsInApp(smartGetEndPoints);
 
 			// calls
