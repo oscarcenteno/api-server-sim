@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 // app to be initialized
 let app;
-// const expressOasGenerator = require('express-oas-generator');
 
 let callsContainer = {
 	port: 0,
 	calls: []
 };
 
+let smtpEmails = [];
+
 class ExcelServer {
+
 	constructor({ files, port }, apiSpec) {
 		this.files = files;
 		this.port = port;
@@ -32,9 +34,8 @@ class ExcelServer {
 			// calls
 			callsContainer.port = this.port;
 			configureCallsEndpoints();
-
-			/** place handleRequests as the very last middleware */
-			//expressOasGenerator.handleRequests();
+			configureSmtpMailsEndpoints();
+			initializeSmtpServer();
 
 			// For Open Api Validator errors
 			// 6. Create an Express error handler
@@ -50,11 +51,68 @@ class ExcelServer {
 			app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
 		});
 	}
-
-
 }
 
 module.exports = ExcelServer;
+
+function initializeSmtpServer() {
+	const MailDev = require('maildev');
+	const maildev = new MailDev();
+
+	maildev.listen();
+	maildev.on('new', function (email) {
+		// We got a new email!
+		smtpEmails.push(email);
+	});
+}
+
+function configureSmtpMailsEndpoints() {
+	app.get('/emails', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.status(200).json(smtpEmails);
+	});
+
+	app.delete('/emails', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+		const deleted = smtpEmails.length;
+		smtpEmails = [];
+		let message = '';
+		switch (deleted) {
+			case 0:
+				message = 'No emails to delete!';
+				break;
+			case 1:
+				message = 'Deleted one email!';
+				break;
+			default:
+				message = `Deleted ${deleted} emails!`;
+				break;
+		}
+
+		res.status(200).json({ 'message': message });
+	});
+
+	app.get('/calls/last', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+		const receivedMethod = req.query.method;
+		const receivedUrl = req.query.url;
+		if (receivedMethod != undefined && receivedUrl != undefined) {
+			const method = receivedMethod.toLowerCase();
+			const url = receivedUrl.toLowerCase();
+			const calls = callsContainer.calls.filter(call => call.method.toLowerCase() === method && call.url.toLowerCase() === url);
+			const lastCall = calls[calls.length - 1];
+			if (lastCall != undefined) {
+				res.status(200).json(lastCall);
+			}
+			else {
+				res.status(404).json({ message: 'No call was found.' });
+			}
+		}
+		else {
+			res.status(400).json({ message: `url and method query params are required. Received:  url: ${req.query.url} method: ${req.query.method}` });
+		}
+	});
+}
 
 async function installOpenApiValidator(apiSpec) {
 	if (apiSpec) {
@@ -113,8 +171,6 @@ function configureCallsEndpoints() {
 			res.status(400).json({ message: `url and method query params are required. Received:  url: ${req.query.url} method: ${req.query.method}` });
 		}
 	});
-
-
 }
 
 // app

@@ -1,0 +1,7 @@
+### Get current time
+GET http://{{host}}/emails
+
+### Change system time
+DELETE http://{{host}}/emails
+Content-Type: application/json
+

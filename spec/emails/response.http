@@ -1,0 +1,64 @@
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 1026
+Date: Wed, 20 Nov 2019 18:36:07 GMT
+Connection: close
+
+[
+  {
+    "html": "<b>Hello world! 👻</b>",
+    "text": "Hello world! 👻",
+    "headers": {
+      "content-type": "multipart/alternative; boundary=\"--_NmP-e7cb948b54ad8341-Part_1\"",
+      "from": "Fred Foo 👻 <foo@example.com>",
+      "to": "bar@example.com, baz@example.com",
+      "subject": "Hello ✔",
+      "message-id": "<35b68d42-b2a9-bd6f-f99a-fa539bc95e80@example.com>",
+      "date": "Wed, 20 Nov 2019 18:34:53 +0000",
+      "mime-version": "1.0"
+    },
+    "subject": "Hello ✔",
+    "messageId": "35b68d42-b2a9-bd6f-f99a-fa539bc95e80@example.com",
+    "priority": "normal",
+    "from": [
+      {
+        "address": "foo@example.com",
+        "name": "Fred Foo 👻"
+      }
+    ],
+    "to": [
+      {
+        "address": "bar@example.com",
+        "name": ""
+      },
+      {
+        "address": "baz@example.com",
+        "name": ""
+      }
+    ],
+    "date": "2019-11-20T18:34:53.000Z",
+    "id": "09VQudwr",
+    "time": "2019-11-20T18:34:53.487Z",
+    "read": false,
+    "envelope": {
+      "from": {
+        "address": "foo@example.com",
+        "args": false
+      },
+      "to": [
+        {
+          "address": "bar@example.com",
+          "args": false
+        },
+        {
+          "address": "baz@example.com",
+          "args": false
+        }
+      ],
+      "host": "[127.0.0.1]",
+      "remoteAddress": "127.0.0.1"
+    },
+    "source": "C:\\Users\\orct\\AppData\\Local\\Temp\\maildev\\28540\\09VQudwr.eml"
+  }
+]
