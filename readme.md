@@ -50,8 +50,10 @@ This project is licensed under the MIT License - see the [license.txt](license.t
 
 Feel free to report suggestions and issues! Thanks.
 
-## Ideas
+## Also
 
-* Validate simulation scenarios against a swagger file
-* Flush automatically daily
-* show an html page for the configured endpoints
+* Contract testing
+  * Validate simulation scenarios against a swagger file
+* Make your test automation aware of external dependencies:
+  * Spy on calls made
+  * SMTP Server and emails verification endpoints

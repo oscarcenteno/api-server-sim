@@ -1,7 +1,7 @@
 {
 	"name": "api-server-sim",
-	"version": "0.1.2",
-	"description": "Api Server Simulator so you can mock api Rest services easily.",
+	"version": "0.1.3",
+	"description": "Api Server Simulator so you can mock api Rest services easily. Also, find an integrated Spy on api calls and an SMTP Server to catch emails.",
 	"main": "index.js",
 	"scripts": {
 		"start": "node test_server/server.js",
@@ -17,7 +17,7 @@
 		"url": "https://github.com/oscarcenteno/api-server-sim.git"
 	},
 	"author": "Oscar Centeno",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"dependencies": {
 		"convert-excel-to-json": "^1.6.1",
 		"cspell": "^4.0.34",
