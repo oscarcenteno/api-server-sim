@@ -33,13 +33,13 @@ class Api {
 	}
 
 	async getEmails() {
-		const apiUrl = 'http://localhost:3001/emails';
+		const apiUrl = 'http://localhost:3000/emails';
 		const response = await axios.get(apiUrl);
 		return response.data;
 	}
 
 	async deleteEmails() {
-		const apiUrl = 'http://localhost:3001/emails';
+		const apiUrl = 'http://localhost:3000/emails';
 		const response = await axios.delete(apiUrl);
 		return response.data;
 	}

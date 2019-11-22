@@ -139,16 +139,41 @@ async function installOpenApiValidator(apiSpec) {
 function configureCallsEndpoints() {
 	app.get('/calls', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
-		res.status(200).json(callsContainer);
+
+		const receivedMethod = req.query.method;
+		const receivedUrl = req.query.url;
+		if (receivedMethod != undefined && receivedUrl != undefined) {
+			const method = receivedMethod.toLowerCase();
+			const url = receivedUrl.toLowerCase();
+			const calls = callsContainer.calls.filter(call => call.method.toLowerCase() === method && call.url.toLowerCase() === url);
+			res.status(200).json(calls);
+		}
+		else {
+			if (receivedMethod != undefined) {
+				const method = receivedMethod.toLowerCase();
+				const calls = callsContainer.calls.filter(call => call.method.toLowerCase() === method);
+				res.status(200).json(calls);
+			}
+			else {
+				if (receivedUrl != undefined) {
+					const url = receivedUrl.toLowerCase();
+					const calls = callsContainer.calls.filter(call => call.url.toLowerCase() === url);
+					res.status(200).json(calls);
+				}
+				else {
+					res.status(200).json(callsContainer);
+				}
+			}
+		}
 	});
 
-	app.put('/calls/flush', (req, res) => {
+	app.delete('/calls', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 
 		const flushed = callsContainer.calls.length;
 
 		callsContainer.calls = [];
-		res.status(200).json({ 'message': `Flushed ${flushed} calls!` });
+		res.status(200).json({ 'message': `Deleted ${flushed} calls!` });
 	});
 
 	app.get('/calls/last', (req, res) => {
