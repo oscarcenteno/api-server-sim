@@ -108,12 +108,15 @@ async function installOpenApiValidator(apiSpec) {
 		parsed = schema;
 
 		const OpenApiValidator = require('express-openapi-validator').OpenApiValidator;
-		new OpenApiValidator({
+		const validator = new OpenApiValidator({
 			apiSpec: parsed,
 			validateRequests: true,
-			validateResponses: true,
-		}).install(app);
-		console.log('Installed OpenApiValidator.');
+			validateResponses: true
+		});
+
+		await validator.install(app);
+
+		console.log(`Installed OpenApiValidator for ${apiSpec}.`);
 	}
 }
 
@@ -162,10 +165,10 @@ function configureCallsEndpoints() {
 		res.setHeader('Content-Type', 'application/json');
 
 		callsContainer.recording = false;
-		const flushed = callsContainer.calls.length;
+		const deleted = callsContainer.calls.length;
 
 		callsContainer.calls = [];
-		res.status(200).json({ 'message': `Deleted ${flushed} calls! Recording stopped.` });
+		res.status(200).json({ 'message': `Deleted ${deleted} calls! Recording stopped.` });
 	});
 
 	app.get('/calls/last', (req, res) => {

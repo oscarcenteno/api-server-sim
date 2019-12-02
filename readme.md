@@ -4,11 +4,11 @@ Easily simulate requests and responses for a REST Api server as specified in an 
 
 ## How to use the library
 
-Next code will use the library and start a server as specified in an Excel file located in your NodeJS project.
+Next code will use the library and start an API server as specified in a list of Excel files located in your NodeJS project.
 
 ```js
 const ExcelServer = require("api-server-sim");
-const sim = new ExcelServer({file: './endpoints.xslx', port: 3000});
+const sim = new ExcelServer({files: ['./endpoints.xslx'], port: 3000});
 sim.run();
 ```
 
