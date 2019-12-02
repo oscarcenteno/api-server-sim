@@ -1,3 +1,6 @@
+### Start recording
+POST http://{{host}}/calls
+
 ### Get all Calls
 GET http://{{host}}/calls
 
@@ -20,5 +23,5 @@ GET http://{{host}}/calls/last?method=get
 GET http://{{host}}/calls/last?url=/hello
 
 ### Flush!
-PUT http://{{host}}/calls/flush
+DELETE http://{{host}}/calls
 

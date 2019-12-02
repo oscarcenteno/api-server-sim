@@ -4,7 +4,8 @@ let app;
 
 let callsContainer = {
 	port: 0,
-	calls: []
+	calls: [],
+	recording: false
 };
 
 let smtpEmails = [];
@@ -92,26 +93,6 @@ function configureSmtpMailsEndpoints() {
 		res.status(200).json({ 'message': message });
 	});
 
-	app.get('/calls/last', (req, res) => {
-		res.setHeader('Content-Type', 'application/json');
-		const receivedMethod = req.query.method;
-		const receivedUrl = req.query.url;
-		if (receivedMethod != undefined && receivedUrl != undefined) {
-			const method = receivedMethod.toLowerCase();
-			const url = receivedUrl.toLowerCase();
-			const calls = callsContainer.calls.filter(call => call.method.toLowerCase() === method && call.url.toLowerCase() === url);
-			const lastCall = calls[calls.length - 1];
-			if (lastCall != undefined) {
-				res.status(200).json(lastCall);
-			}
-			else {
-				res.status(404).json({ message: 'No call was found.' });
-			}
-		}
-		else {
-			res.status(400).json({ message: `url and method query params are required. Received:  url: ${req.query.url} method: ${req.query.method}` });
-		}
-	});
 }
 
 async function installOpenApiValidator(apiSpec) {
@@ -139,6 +120,7 @@ async function installOpenApiValidator(apiSpec) {
 function configureCallsEndpoints() {
 	app.get('/calls', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
+		callsContainer.recording = false;
 
 		const receivedMethod = req.query.method;
 		const receivedUrl = req.query.url;
@@ -167,17 +149,29 @@ function configureCallsEndpoints() {
 		}
 	});
 
+	app.post('/calls', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+
+		callsContainer.recording = true;
+		const current = callsContainer.calls.length;
+
+		res.status(200).json({ 'message': `Recording started! Currently there are ${current} calls.` });
+	});
+
 	app.delete('/calls', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 
+		callsContainer.recording = false;
 		const flushed = callsContainer.calls.length;
 
 		callsContainer.calls = [];
-		res.status(200).json({ 'message': `Deleted ${flushed} calls!` });
+		res.status(200).json({ 'message': `Deleted ${flushed} calls! Recording stopped.` });
 	});
 
 	app.get('/calls/last', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
+		callsContainer.recording = false;
+
 		const receivedMethod = req.query.method;
 		const receivedUrl = req.query.url;
 		if (receivedMethod != undefined && receivedUrl != undefined) {
@@ -189,11 +183,11 @@ function configureCallsEndpoints() {
 				res.status(200).json(lastCall);
 			}
 			else {
-				res.status(404).json({ message: 'No call was found.' });
+				res.status(404).json({ message: 'No call was found. Calls recording was stopped.' });
 			}
 		}
 		else {
-			res.status(400).json({ message: `url and method query params are required. Received:  url: ${req.query.url} method: ${req.query.method}` });
+			res.status(400).json({ message: `url and method query params are required. Received: url: ${req.query.url} method: ${req.query.method}.  Calls recording was stopped.` });
 		}
 	});
 }
@@ -291,15 +285,17 @@ function createEndpoint(element) {
 }
 
 function reportCall({ method, element, req }) {
-	const thisCall = {
-		'method': method,
-		'url': element.url,
-		'headers': req.headers,
-		'body': req.body,
-		'query': req.query,
-		'timeStamp': Date.now()
-	};
-	callsContainer.calls.push(thisCall);
+	if (callsContainer.recording) {
+		const thisCall = {
+			'method': method,
+			'url': element.url,
+			'headers': req.headers,
+			'body': req.body,
+			'query': req.query,
+			'timeStamp': Date.now()
+		};
+		callsContainer.calls.push(thisCall);
+	}
 }
 
 function matches(requiredProperties, requestProperties) {

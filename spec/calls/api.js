@@ -51,6 +51,12 @@ class Api {
 		};
 	}
 
+	async startRecordingCalls() {
+		const apiUrl = 'http://localhost:3001/calls';
+		const response = await axios.post(apiUrl);
+		return response.data;
+	}
+
 	async deleteCalls() {
 		const apiUrl = 'http://localhost:3001/calls';
 		const response = await axios.delete(apiUrl);

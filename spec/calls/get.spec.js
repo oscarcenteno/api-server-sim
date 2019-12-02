@@ -8,21 +8,37 @@ describe('Calls', () => {
 		expect(port).toEqual(3001);
 	});
 
-	it('can report calls to endpoints', async () => {
+	it('sim does not record calls by default, and also after a delete', async () => {
 		// given some calls are reported
-		const currentCalls = await api.getCalls();
+		await api.deleteCalls();
 
 		// when a new call is made
 		await helloApi.getHello();
 
 		// then the calls will have one more reported
 		const calls = await api.getCalls();
-		const expected = currentCalls.length + 1;
-		expect(calls.length).toEqual(expected);
+		expect(calls.length).toEqual(0);
+	});
+
+	it('can report calls to endpoints', async () => {
+		// given recording is started on a fresh server
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+
+		// when a new call is made
+		await helloApi.getHello();
+
+		// then the calls will have one more reported
+		const calls = await api.getCalls();
+		expect(calls.length).toEqual(1);
 	});
 
 	it('can report method, url, headers, body and query used for a call', async () => {
-		// given the hello endpoint was called
+		// given no calls are reported
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+
+		// when the hello endpoint was called
 		await helloApi.getHello();
 
 		// then the calls endpoint will contain a call to it
@@ -41,21 +57,67 @@ describe('Calls', () => {
 		};
 	}
 
-	it('can delete all calls', async () => {
-		// given at least one call was made
+	it('can delete calls', async () => {
+		// given several calls were recorded
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+		await helloApi.getHello();
+		await helloApi.getHello();
 		await helloApi.getHello();
 
-		// when the calls are deleted
+		// when calls are deleted
 		await api.deleteCalls();
 
-		// then no calls will be returned
+		// then no more will be reported
 		const calls = await api.getCalls();
 		expect(calls.length).toEqual(0);
 	});
 
-	it('can list calls by url and method', async () => {
-		// given the hello endpoint was called 3 times
+	it('can start recording all calls until a question is made', async () => {
+		// given at least one call was made
 		await api.deleteCalls();
+		await api.startRecordingCalls();
+		await helloApi.getHello();
+
+		// when a question is made
+		await api.getCalls();
+
+		// then no more will be recorded in next calls
+		await helloApi.getHello();
+		await helloApi.getHello();
+		await helloApi.getHello();
+		await helloApi.getHello();
+
+		const secondCalls = await api.getCalls();
+		expect(secondCalls.length).toEqual(1);
+	});
+
+	it('can re-start recording calls', async () => {
+		// given a questions was made
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+		await helloApi.getHello();
+		await api.getCalls();
+
+		// when the recording is restarted
+		await api.startRecordingCalls();
+
+		// then next calls will be recorded
+		await helloApi.getHello();
+		await helloApi.getHello();
+		await helloApi.getHello();
+		await helloApi.getHello();
+
+		const secondCalls = await api.getCalls();
+		expect(secondCalls.length).toEqual(5);
+	});
+
+	it('can list calls by url and method', async () => {
+		// given a fresh server is recording
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+
+		// when the hello endpoint was called 3 times
 		await helloApi.getHello();
 		await helloApi.getHello();
 		await helloApi.getHello();
@@ -66,8 +128,12 @@ describe('Calls', () => {
 	});
 
 	it('can list calls by url only', async () => {
-		// given the hello endpoint was called four times
+		// given a fresh server is recording
 		await api.deleteCalls();
+		await api.startRecordingCalls();
+
+		// when the hello endpoint was called four times
+		await api.startRecordingCalls();
 		await helloApi.getHello();
 		await helloApi.postHello();
 		await helloApi.putHello();
@@ -80,8 +146,12 @@ describe('Calls', () => {
 	});
 
 	it('can list calls by method only', async () => {
-		// given the POST endpoint was called two times
+		// given a fresh server is recording
 		await api.deleteCalls();
+		await api.startRecordingCalls();
+
+		// when the POST endpoint was called two times
+		await api.startRecordingCalls();
 		await helloApi.postHello();
 		await helloApi.getHello();
 		await helloApi.postHello();
