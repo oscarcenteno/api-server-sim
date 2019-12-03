@@ -8,6 +8,8 @@ let callsContainer = {
 	recording: false
 };
 
+let dynamics = [];
+
 let smtpEmails = [];
 
 class ExcelServer {
@@ -28,19 +30,24 @@ class ExcelServer {
 
 		installOpenApiValidator(this.apiSpec).then(() => {
 
+			configureDynamicsMiddleware();
+
 			const getSmartEndPoints = require('./smart_endpoints');
 			const smartGetEndPoints = getSmartEndPoints(this.files);
 			initializeEndpointsInApp(smartGetEndPoints);
 
 			// calls
 			callsContainer.port = this.port;
+
 			configureCallsEndpoints();
+
+			// smtp server
 			configureSmtpMailsEndpoints();
 			initializeSmtpServer();
 
 			// For Open Api Validator errors
 			// 6. Create an Express error handler
-			app.use((err, req, res, next) => {
+			app.use((err, req, res) => {
 				// 7. Customize errors
 				res.status(err.status || 500).json({
 					message: err.message,
@@ -49,12 +56,52 @@ class ExcelServer {
 			});
 
 			process.title = `api-server-sim-${this.port}`;
-			app.listen(this.port, () => console.log(`Listening on port ${this.port}!`));
+			app.listen(this.port, () => console.log(`Sim Server is listening on port ${this.port}!`));
 		});
 	}
 }
 
 module.exports = ExcelServer;
+
+function configureDynamicsMiddleware() {
+	const dynamicsMiddleware = (req, res, next) => {
+		console.log(`Logged  ${req.method} ${req.url}`);
+
+		const found = dynamics.find(dynamic => dynamic.path === req.path && dynamic.method.toLowerCase() === req.method.toLowerCase());
+
+		if (found) {
+			console.log(`  Simulating a dynamic call to ${found.method} ${found.path} with status ${found.status}`);
+
+			// use dynamics just one time
+			dynamics = dynamics.filter(dynamic => !(dynamic.path === req.path && dynamic.method.toLowerCase() === req.method.toLowerCase()));
+			res.setHeader('Content-Type', 'application/json');
+			res.status(found.status).json(found.response);
+		} else {
+			next();
+		}
+	};
+
+	// application level middleware
+	app.use(dynamicsMiddleware);
+
+	app.post('/simulations', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+
+		dynamics.push(req.body);
+		const current = dynamics.length;
+
+		res.status(200).json({ 'message': `Created a new simulation. Currently there are ${current} dynamic simulations.` });
+	});
+
+	app.delete('/simulations', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+
+		const deleted = dynamics.length;
+
+		dynamics = [];
+		res.status(200).json({ 'message': `Deleted ${deleted} simulations!` });
+	});
+}
 
 function initializeSmtpServer() {
 	const MailDev = require('maildev');
@@ -217,7 +264,6 @@ function initializeEndpointsInApp(smartGetEndPoints) {
 }
 
 function createEndpoint(element) {
-
 
 	switch (element.method) {
 		case 'get':

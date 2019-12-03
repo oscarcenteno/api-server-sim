@@ -1,0 +1,27 @@
+### Start recording
+POST http://{{host}}/calls
+
+### Get all Calls
+GET http://{{host}}/calls
+
+### Hello!
+GET http://{{host}}/hello
+
+### Last
+GET http://{{host}}/calls/last?method=GET&url=/hello
+
+### Last
+GET http://{{host}}/calls/last?method=get&url=/HELLO
+
+### Not found
+GET http://{{host}}/calls/last?method=get&url=/HELLOX
+
+### Invalid
+GET http://{{host}}/calls/last?method=get
+
+### Invalid
+GET http://{{host}}/calls/last?url=/hello
+
+### Flush!
+DELETE http://{{host}}/calls
+

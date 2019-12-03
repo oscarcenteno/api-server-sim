@@ -1,6 +1,6 @@
 {
 	"name": "api-server-sim",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Api Server Simulator so you can mock api Rest services easily. Also, find an integrated Spy on api calls and an SMTP Server to catch emails.",
 	"main": "index.js",
 	"scripts": {
@@ -22,7 +22,7 @@
 		"convert-excel-to-json": "^1.6.1",
 		"cspell": "^4.0.35",
 		"express": "^4.17.1",
-		"express-openapi-validator": "3.0.0-alpha.4",
+		"express-openapi-validator": "3.0.1",
 		"fake-smtp-server": "^0.8.0",
 		"json-schema-ref-parser": "^7.1.2",
 		"maildev": "^1.1.0",
