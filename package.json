@@ -1,6 +1,6 @@
 {
 	"name": "api-server-sim",
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": "Api Server Simulator so you can mock api Rest services easily. Also, find an integrated Spy on api calls and an SMTP Server to catch emails.",
 	"main": "index.js",
 	"scripts": {
