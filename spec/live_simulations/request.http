@@ -1,27 +1,24 @@
-### Start recording
-POST http://{{host}}/calls
 
-### Get all Calls
-GET http://{{host}}/calls
-
-### Hello!
+###
 GET http://{{host}}/hello
 
-### Last
-GET http://{{host}}/calls/last?method=GET&url=/hello
+###
+POST http://{{host}}/simulations
+Content-type: application/json
 
-### Last
-GET http://{{host}}/calls/last?method=get&url=/HELLO
+{
+    "method": "GET",
+	"path": "/hello",
+	"status": 500,
+	"response": { "message": "server is down!" }
+}
 
-### Not found
-GET http://{{host}}/calls/last?method=get&url=/HELLOX
+###
+GET http://{{host}}/simulations
 
-### Invalid
-GET http://{{host}}/calls/last?method=get
+###
+DELETE http://{{host}}/simulations
 
-### Invalid
-GET http://{{host}}/calls/last?url=/hello
 
-### Flush!
-DELETE http://{{host}}/calls
-
+###
+GET http://{{host}}/hello

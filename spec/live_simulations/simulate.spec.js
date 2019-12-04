@@ -1,10 +1,25 @@
-const api = require('./api');
 const helloApi = require('../hello/get/api');
+const actions = require('./actions');
+const questions = require('./questions');
 
-describe('Simulate responses on demand', () => {
-	it('can add a one-time-simulation at runtime to match method and path', async () => {
-		// given endpoint is configured to answer GET /hello
-		await simulateGetHello();
+describe('One-time Simulations / Simulate responses on demand', () => {
+
+	it('can get the list of one-time simulations', async () => {
+		// given there were no on-time simulations
+		await actions.deleteSimulations();
+
+		// when an endpoint is configured to answer 500 to GET /hello
+		await actions.simulateGetHelloReturns500();
+
+		// then there will be one simulation
+		const number = await questions.getSimulationsNumber();
+		expect(number).toEqual(1);
+	});
+
+	it('can add a one-time simulation at runtime to match method and path', async () => {
+		// given an endpoint was configured to answer 500 to GET /hello
+		await actions.deleteSimulations();
+		await actions.simulateGetHelloReturns500();
 
 		try {
 			// when GET /hello is invoked
@@ -15,13 +30,14 @@ describe('Simulate responses on demand', () => {
 			expect(error.response.status).toEqual(500);
 		}
 		finally {
-			await api.deleteSimulations();
+			await actions.deleteSimulations();
 		}
 	});
 
 	it('both method and path should match', async () => {
-		// given endpoint is configured to answer POST /hello
-		await simulatePostHello();
+		// given an endpoint was configured to answer 500 to POST /hello
+		await actions.deleteSimulations();
+		await actions.simulatePostHelloReturns500();
 
 		try {
 			// when GET /hello is invoked
@@ -29,12 +45,13 @@ describe('Simulate responses on demand', () => {
 			// then no 500 error is thrown
 		}
 		finally {
-			await api.deleteSimulations();
+			await actions.deleteSimulations();
 		}
 	});
 	it('can add a one-time-simulation at runtime to get an status code', async () => {
-		// given endpoint is configured to answer GET /hello
-		await simulateGetHello();
+		// given an endpoint was configured to answer 500 to GET /hello
+		await actions.deleteSimulations();
+		await actions.simulateGetHelloReturns500();
 
 		try {
 			// when GET /hello is invoked
@@ -45,13 +62,14 @@ describe('Simulate responses on demand', () => {
 			expect(error.response.status).toEqual(500);
 		}
 		finally {
-			await api.deleteSimulations();
+			await actions.deleteSimulations();
 		}
 	});
 
 	it('can add a one-time-simulation at runtime to get a response', async () => {
-		// given endpoint is configured to answer GET /hello
-		await simulateGetHello();
+		// given an endpoint was configured to answer 500 to GET /hello
+		await actions.deleteSimulations();
+		await actions.simulateGetHelloReturns500();
 
 		try {
 			// when GET /hello is invoked
@@ -63,27 +81,27 @@ describe('Simulate responses on demand', () => {
 			expect(error.response.data).toEqual(expected);
 		}
 		finally {
-			await api.deleteSimulations();
+			await actions.deleteSimulations();
 		}
 	});
+
+	it('a one-time-simulation works only one time', async () => {
+		// given an endpoint was configured to answer 500 to GET /hello
+		await actions.deleteSimulations();
+		await actions.simulateGetHelloReturns500();
+
+		// when the simulation is performed
+		try {
+			await helloApi.getHello();
+			fail('Server should be down.');
+		}
+		catch (error) { error.response.data; }
+		finally {
+			await actions.deleteSimulations();
+		}
+
+		// then subsequent calls will be successful
+		const hello = await helloApi.getHello();
+		expect(hello.message).toEqual('Hello World!');
+	});
 });
-
-async function simulateGetHello() {
-	const data = {
-		method: 'get',
-		path: '/hello',
-		status: 500,
-		response: { message: 'server is down!' }
-	};
-	await api.createSimulation(data);
-}
-
-async function simulatePostHello() {
-	const data = {
-		method: 'post',
-		path: '/hello',
-		status: 500,
-		response: {}
-	};
-	await api.createSimulation(data);
-}

@@ -84,6 +84,11 @@ function configureDynamicsMiddleware() {
 	// application level middleware
 	app.use(dynamicsMiddleware);
 
+	app.get('/simulations', (req, res) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.status(200).json(dynamics);
+	});
+
 	app.post('/simulations', (req, res) => {
 		res.setHeader('Content-Type', 'application/json');
 

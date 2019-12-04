@@ -8,14 +8,29 @@ describe('Calls', () => {
 		expect(port).toEqual(3001);
 	});
 
-	it('sim does not record calls by default, and also after a delete', async () => {
-		// given some calls are reported
+	it('sim does not record calls by default', async () => {
+		// given that recording has not started
 		await api.deleteCalls();
 
 		// when a new call is made
 		await helloApi.getHello();
 
-		// then the calls will have one more reported
+		// then no calls should be reported
+		const calls = await api.getCalls();
+		expect(calls.length).toEqual(0);
+	});
+
+	it('sim does not record calls after a delete', async () => {
+		// given calls were deleted
+		await api.deleteCalls();
+		await api.startRecordingCalls();
+		await helloApi.getHello();
+		await api.deleteCalls();
+
+		// when a new call is made
+		await helloApi.getHello();
+
+		// then no calls should be recorded
 		const calls = await api.getCalls();
 		expect(calls.length).toEqual(0);
 	});
