@@ -45,6 +45,17 @@ class ExcelServer {
             configureSmtpMailsEndpoints();
             initializeSmtpServer();
 
+            // Configure error handler for api spec validator
+            if (this.apiSpec) {
+                app.use((err, req, res, next) => {
+                    // format error
+                    res.status(err.status || 500).json({
+                        message: err.message,
+                        errors: err.errors,
+                    });
+                });
+            }
+
             process.title = `api-server-sim-${this.port}`;
             app.listen(this.port, () => console.log(`Sim Server is listening on port ${this.port}!`));
         });
