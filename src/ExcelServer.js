@@ -14,10 +14,13 @@ let smtpEmails = [];
 
 class ExcelServer {
 
-    constructor({ files, port }, apiSpec) {
+    constructor({ files, port }, { apiSpec, validateRequests, validateResponses }) {
         this.files = files;
         this.port = port;
-        this.apiSpec = apiSpec;
+        this.validations = {
+            validateOpenApi: validateRequests & validateResponses,
+            apiSpec, validateRequests, validateResponses
+        };
 
         console.log('files: ' + files);
         console.log('port: ' + port);
@@ -28,7 +31,7 @@ class ExcelServer {
 
         app = initializeApp();
 
-        installOpenApiValidator(this.apiSpec).then(() => {
+        installOpenApiValidator(this.validations).then(() => {
 
             configureDynamicsMiddleware();
 
@@ -46,7 +49,7 @@ class ExcelServer {
             initializeSmtpServer();
 
             // Configure error handler for api spec validator
-            if (this.apiSpec) {
+            if (this.validations.validateOpenApi) {
                 app.use((err, req, res, next) => {
                     // format error
                     res.status(err.status || 500).json({
@@ -148,8 +151,8 @@ function configureSmtpMailsEndpoints() {
 
 }
 
-async function installOpenApiValidator(apiSpec) {
-    if (apiSpec) {
+async function installOpenApiValidator({ validateOpenApi, apiSpec, validateRequests, validateResponses }) {
+    if (validateOpenApi) {
         let parsed = '';
         const refParser = require('json-schema-ref-parser');
 
@@ -163,8 +166,8 @@ async function installOpenApiValidator(apiSpec) {
         const OpenApiValidator = require('express-openapi-validator').OpenApiValidator;
         const validator = new OpenApiValidator({
             apiSpec: parsed,
-            validateRequests: true,
-            validateResponses: true
+            validateRequests,
+            validateResponses
         });
 
         await validator.install(app);
