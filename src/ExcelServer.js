@@ -18,7 +18,7 @@ class ExcelServer {
         this.files = files;
         this.port = port;
         this.validations = {
-            validateOpenApi: validateRequests & validateResponses,
+            validateOpenApi: validateRequests || validateResponses,
             apiSpec, validateRequests, validateResponses
         };
 
