@@ -94,4 +94,4 @@ Feel free to report suggestions and issues! Thanks.
 * Make your test automation aware of external dependencies:
   * Spy on calls made
   * Spy on emails sent
-* Videos with advice on designing a testable backend system and how the Simulator can
+* Videos with advice on designing a testable backend system and how the Simulator can improve the reliability of a test automation strategy.
