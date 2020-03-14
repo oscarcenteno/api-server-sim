@@ -2,8 +2,8 @@
 
 This Simulator allows for a Test Automation System to control and observe the universe of a Backend system that depends upon external API services. The two main features are:
 
-1. Simulate requests and responses for a REST Api server as specified in an Excel file.
-2. Spy on API calls and emails being sent by your backend.
+1. Simulate requests and responses for a REST Api server specified as scenarios in Excel files.
+2. Spy on API calls and emails being sent by your backend, so you can verify and use information sent to external systems.
 
 ## How to use
 
