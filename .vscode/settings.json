@@ -12,11 +12,15 @@
         "$shared": {},
         "local": {
             "host": "localhost:3001"
+        },
+        "recorder": {
+            "host": "localhost:3002"
         }
     },
     "editor.wordWrap": "on",
     "workbench.colorCustomizations": {
         "activityBar.background": "#1f6fd0",
+        "activityBar.activeBackground": "#1f6fd0",
         "activityBar.activeBorder": "#ee90bb",
         "activityBar.foreground": "#e7e7e7",
         "activityBar.inactiveForeground": "#e7e7e799",
@@ -27,5 +31,8 @@
         "statusBar.foreground": "#e7e7e7",
         "tab.activeBorder": "#1f6fd0"
     },
-    "peacock.color": "#1857a4"
+    "peacock.color": "#1857a4",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }

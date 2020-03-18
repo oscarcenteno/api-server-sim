@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "node test_server/server.js",
+        "recorder": "node test_server/recorder.js",
         "test": "jasmine",
         "lint": "eslint ./",
         "lint-fix": "eslint ./ --fix",

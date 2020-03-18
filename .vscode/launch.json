@@ -12,6 +12,15 @@
       "skipFiles": [
         "<node_internals>/**"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Recording Proxy Server",
+      "program": "${workspaceFolder}/test_server/recorder.js",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
     }
   ]
 }
