@@ -1,9 +1,9 @@
 function parseJsonFile({ appDir, file }) {
     try {
         const path = require('path');
-        const absolutefile = path.join(appDir, file);
+        const absoluteFile = path.join(appDir, file);
 
-        return require(absolutefile);
+        return require(absoluteFile);
     } catch (error) {
         throw new Error('Please check if this is a valid path, the file exists, or is a valid json object: ' + file);
     }

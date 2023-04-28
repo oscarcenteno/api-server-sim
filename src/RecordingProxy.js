@@ -117,7 +117,7 @@ async function proxyPut({ forwardedUrl, headers, body }) {
 
 async function proxyDelete({ forwardedUrl, headers, body }) {
     const options = { headers };
-    return await axios.delete(forwardedUrl, body, options);
+    return await axios.delete(forwardedUrl, options);
 }
 
 // app

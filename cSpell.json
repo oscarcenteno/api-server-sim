@@ -6,7 +6,10 @@
         "ISTQB"
     ],
     "flagWords": [],
-    "ignoreWords": [],
+    "ignoreWords": [
+        "openapi",
+        "maildev"
+    ],
     "ignorePaths": [
         "node_modules",
         ".vscode",

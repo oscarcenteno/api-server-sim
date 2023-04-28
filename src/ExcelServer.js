@@ -153,24 +153,15 @@ function configureSmtpMailsEndpoints() {
 
 async function installOpenApiValidator({ validateOpenApi, apiSpec, validateRequests, validateResponses }) {
     if (validateOpenApi) {
-        let parsed = '';
-        const refParser = require('json-schema-ref-parser');
+        const OpenApiValidator = require('express-openapi-validator');
 
-        const schema = await refParser.dereference(apiSpec);
-
-        // `schema` is just a normal JavaScript object that contains your entire JSON Schema,
-        // including referenced files, combined into a single object
-        console.log('Schema parsed and deferenced successfully.');
-        parsed = schema;
-
-        const OpenApiValidator = require('express-openapi-validator').OpenApiValidator;
-        const validator = new OpenApiValidator({
-            apiSpec: parsed,
-            validateRequests,
-            validateResponses
-        });
-
-        await validator.install(app);
+        app.use(
+            OpenApiValidator.middleware({
+                apiSpec,
+                validateRequests, // (default)
+                validateResponses, // false by default
+            }),
+        );
 
         console.log(`Installed OpenApiValidator for ${apiSpec}.`);
     }
