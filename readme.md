@@ -4,6 +4,12 @@ This Simulator allows for a Test Automation System to control and observe the un
 
 1. Simulate requests and responses for a REST Api server specified as scenarios in Excel files.
 2. Spy on API calls and emails being sent by your backend, so you can verify and use information sent to external systems.
+3. Contract testing
+  * Validate simulation scenarios (requests and responses) against a swagger file
+4. Dynamically create API simulations during your tests
+5. Make your test automation aware of external dependencies:
+  * Spy on calls made
+  * Spy on emails sent
 
 ## How to use
 
@@ -86,12 +92,3 @@ This project is licensed under the MIT License - see the [license.txt](license.t
 ## Contributing
 
 Feel free to report suggestions and issues! Thanks.
-
-## Also
-
-* Contract testing
-  * Validate simulation scenarios (requests and responses) against a swagger file
-* Make your test automation aware of external dependencies:
-  * Spy on calls made
-  * Spy on emails sent
-* Videos with advice on designing a testable backend system and how the Simulator can improve the reliability of a test automation strategy.
