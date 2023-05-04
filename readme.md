@@ -1,4 +1,4 @@
-# API Server Simulator
+# API Server Simulator [![Node.js CI](https://github.com/oscarcenteno/api-server-sim/actions/workflows/node.js.yml/badge.svg?branch=master)](https://github.com/oscarcenteno/api-server-sim/actions/workflows/node.js.yml)
 
 This Simulator allows for a Test Automation System to control and observe the universe of a Backend system that depends upon external API services. The two main features are:
 
